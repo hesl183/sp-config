@@ -1,0 +1,48 @@
+
+spring:
+  application:
+    name: zuul
+
+server:
+  port: 3001
+
+#eureka注册
+eureka:
+  client:
+    service-url:
+      defaultZone: http://eureka1:2001/eureka, http://eureka2:2002/eureka
+
+#zuul路由配置(api网关:统一的调用入口)
+zuul:
+  routes:
+          #默认规则:从eureka注册中心获取注册信息,自动配置,若果使用默认配置,必须保证其他服务先正确启动并进行注册
+    item-service: /item-service/** #请求item-service的所有路径 都转发到item-service
+    user-service: /user-service/**
+    order-service: /order-service/**
+  retryable: true #// 开启重试(zuul包含了ribbon),默认关闭
+  #zuul 会过滤敏感 http 协议头，默认过滤以下协议头：Cookie,Set-Cookie,Authorization
+  sensitive-headers: #不过滤这些协议头
+  
+#ribbon超时  
+ribbon:
+  ConnectTimeout: 1000
+  ReadTimeout: 1000
+  MaxAutoRetriesNextServer: 1
+  MaxAutoRetries: 1
+
+#hystrix降级超时
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 500
+
+#hystrix数据监控
+management:
+  endpoints:
+    web:
+      exposure:
+        include: hystrix.stream
+    
