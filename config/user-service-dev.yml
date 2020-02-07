@@ -14,4 +14,11 @@ eureka:
   client:
     service-url:
       defaultZone:  http://eureka1:2001/eureka, http://eureka2:2002/eureka
+
+#暴露 refresh 端点(动态获取配置文件)
+management:
+  endpoints:
+    web:
+      exposure:
+        include: refresh
     
