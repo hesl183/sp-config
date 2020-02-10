@@ -2,6 +2,10 @@
 spring:
   application:
     name: order-service
+  #不覆盖通用配置
+  cloud:
+    config:
+      override-none: true
 
 server:
   port: 8201
