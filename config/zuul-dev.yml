@@ -7,7 +7,7 @@ spring:
       override-none: true
   #连接信息
   rabbitmq:
-    host: 192.168.64.3 #虚拟机IP地址
+    host: 192.168.64.140 #虚拟机IP地址
     port: 5672
     username: admin
     password: admin
